@@ -12,13 +12,13 @@ struct ContentView: View {
     // one way binding
     @State private var checkAmount = ""
     @State private var numberOfPeople = 2
-    @State private var tipPerc = 2
+    @State private var tipPerc = 0
     
     let tipPercentages = [10, 15, 20, 25, 0]
     
     var totalPerPerson: Double {
         let people = Double(numberOfPeople + 2)
-        let tip = Double(tipPercentages[tipPerc])
+        let tip = Double(tipPerc)
         let amount = Double(checkAmount) ?? 0.0
         
         let tipVal = amount / 100.0 * tip
@@ -49,18 +49,18 @@ struct ContentView: View {
                 
                 Section(header: Text("How much tip do you want to leave?")) {
                     Picker("Tip Percentage", selection: $tipPerc) {
-                        ForEach(0..<tipPercentages.count) {
-                            return Text("\(self.tipPercentages[$0])%")
+                        ForEach(tipPercentages, id: \.self) { percent in
+                            Text("\(percent)")
                         }
                     }
                     .pickerStyle(SegmentedPickerStyle())
                 }
                 
-                Section {
+                Section(header: Text("Amount per person")) {
                     Text("$\(totalPerPerson, specifier: "%.2f")")
                 }
             }
-            .navigationBarTitle(Text("We Split"))
+            .navigationBarTitle("We Split", displayMode: .automatic)
         }
     }
 }
