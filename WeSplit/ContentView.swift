@@ -67,6 +67,20 @@ struct ContentView: View {
     }
 }
 
+struct LargeBlueText: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(.largeTitle)
+            .foregroundColor(.blue)
+    }
+}
+
+extension View {
+    func largeBlueFont() -> some View {
+        return modifier(LargeBlueText())
+    }
+}
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
