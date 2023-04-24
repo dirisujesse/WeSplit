@@ -12,7 +12,7 @@ struct ContentView: View {
     // one way binding
     @State private var checkAmount = ""
     @State private var numberOfPeople = 2
-    @State private var tipPerc = 0
+    @State private var tipPerc = 10
     
     let tipPercentages = [10, 15, 20, 25, 0]
     
@@ -50,14 +50,16 @@ struct ContentView: View {
                 Section(header: Text("How much tip do you want to leave?")) {
                     Picker("Tip Percentage", selection: $tipPerc) {
                         ForEach(tipPercentages, id: \.self) { percent in
-                            Text("\(percent)")
+                            Text("\(percent)%")
                         }
                     }
                     .pickerStyle(SegmentedPickerStyle())
                 }
                 
+                
                 Section(header: Text("Amount per person")) {
                     Text("$\(totalPerPerson, specifier: "%.2f")")
+                        .foregroundColor(tipPerc <= 0 ? .red : .none)
                 }
             }
             .navigationBarTitle("We Split", displayMode: .automatic)
